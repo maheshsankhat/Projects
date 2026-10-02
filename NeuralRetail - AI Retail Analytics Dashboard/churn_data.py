@@ -1,21 +1,14 @@
 def churn_pred(snapshot_date,df):
         # last purchase
-    last_purchase = df.groupby(
-        'Customer ID'
-    )['InvoiceDate'].max()
+    last_purchase = df.groupby('Customer ID')['InvoiceDate'].max()
 
     # churn logic
-    churn = (
-        snapshot_date - last_purchase
-    ).dt.days > 90
+    churn = (snapshot_date - last_purchase).dt.days > 90
 
     # dataframe
     churn_df = churn.reset_index()
 
-    churn_df.columns = [
-        'CustomerID',
-        'Churn'
-    ]
+    churn_df.columns = ['CustomerID','Churn']
 
     # only churn customers
     churn_customers = churn_df[
